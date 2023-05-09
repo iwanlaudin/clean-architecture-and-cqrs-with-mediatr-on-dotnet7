@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ItechCleanArst.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace ItechCleanArst.Application.Interfaces
 {
@@ -12,7 +7,8 @@ namespace ItechCleanArst.Application.Interfaces
     {
         DbSet<Article> Articles { get; set; }
         DbSet<Category> Categories { get; set; }
-
-        DatabaseFacade Database { get; }
+        DbSet<Book> Books { get; set; }
+        DbSet<Author> Authors { get; set; }
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

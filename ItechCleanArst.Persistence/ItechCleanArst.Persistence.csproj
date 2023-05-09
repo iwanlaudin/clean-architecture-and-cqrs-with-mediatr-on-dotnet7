@@ -12,5 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="../ItechCleanArst.Domain/ItechCleanArst.Domain.csproj" />
+    <ProjectReference Include="../ItechCleanArst.Application/ItechCleanArst.Application.csproj" />
   </ItemGroup>
 </Project>
