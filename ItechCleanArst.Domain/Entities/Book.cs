@@ -1,3 +1,4 @@
+
 namespace ItechCleanArst.Domain.Entities
 {
     public class Book : AuditableEntity

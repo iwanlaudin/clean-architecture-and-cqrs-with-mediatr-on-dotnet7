@@ -135,6 +135,27 @@ namespace ItechCleanArst.Persistence.Migrations
                     b.ToTable("Books");
                 });
 
+            modelBuilder.Entity("ItechCleanArst.Domain.Entities.BookAuthor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("BookAuthors");
+                });
+
             modelBuilder.Entity("ItechCleanArst.Domain.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -182,6 +203,25 @@ namespace ItechCleanArst.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("ItechCleanArst.Domain.Entities.BookAuthor", b =>
+                {
+                    b.HasOne("ItechCleanArst.Domain.Entities.Author", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ItechCleanArst.Domain.Entities.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Book");
                 });
 
             modelBuilder.Entity("ItechCleanArst.Domain.Entities.Category", b =>

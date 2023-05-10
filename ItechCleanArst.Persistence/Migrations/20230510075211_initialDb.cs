@@ -87,6 +87,31 @@ namespace ItechCleanArst.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BookAuthors",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    BookId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AuthorId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookAuthors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BookAuthors_Authors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Authors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BookAuthors_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Articles",
                 columns: table => new
                 {
@@ -119,6 +144,19 @@ namespace ItechCleanArst.Persistence.Migrations
                 name: "IX_AuthorBook_BooksId",
                 table: "AuthorBook",
                 column: "BooksId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookAuthors_AuthorId",
+                table: "BookAuthors",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookAuthors_BookId",
+                table: "BookAuthors",
+                column: "BookId");
+            
+            migrationBuilder.DropTable(
+                name: "AuthorBook");
         }
 
         /// <inheritdoc />
@@ -129,6 +167,9 @@ namespace ItechCleanArst.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "AuthorBook");
+
+            migrationBuilder.DropTable(
+                name: "BookAuthors");
 
             migrationBuilder.DropTable(
                 name: "Categories");
