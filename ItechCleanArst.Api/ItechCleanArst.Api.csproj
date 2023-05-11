@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5"/>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="../ItechCleanArst.Application/ItechCleanArst.Application.csproj"/>
     <ProjectReference Include="../ItechCleanArst.Persistence/ItechCleanArst.Persistence.csproj"/>
   </ItemGroup>
 </Project>

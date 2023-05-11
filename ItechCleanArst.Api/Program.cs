@@ -1,8 +1,10 @@
 using ItechCleanArst.Persistence;
+using ItechCleanArst.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddPersistence(builder.Configuration, "DefaultConnection");
+builder.Services.AddApplication();
 
 // Add services to the container.
 
