@@ -20,7 +20,7 @@ namespace ItechCleanArst.Application.Bussines.Books.Commands.Books
         {
             var book = await _dbcontext.Books
                 .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == request.Id && x.IsDeleted == true, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == request.Id && x.IsDeleted == false, cancellationToken);
 
             if (book != null)
             {
