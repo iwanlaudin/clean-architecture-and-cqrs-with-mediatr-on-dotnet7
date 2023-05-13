@@ -27,8 +27,8 @@ namespace ItechCleanArst.Application.Bussines.Categories.Commands
             {
                 Id = Guid.NewGuid(),
                 Name = request.Name,
-                CreatedDt = DateTime.UtcNow,
-                UpdatedDt = DateTime.UtcNow,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
                 IsDeleted = false
             };
 
@@ -41,7 +41,7 @@ namespace ItechCleanArst.Application.Bussines.Categories.Commands
         public async Task<string> Update(Category category, CreateCategoryCommand request, CancellationToken cancellationToken)
         {
             category.Name = request.Name;
-            category.UpdatedDt = DateTime.UtcNow;
+            category.UpdatedAt = DateTime.UtcNow;
 
             _dbcontext.Categories.Update(category);
             await _dbcontext.SaveChangesAsync(cancellationToken);

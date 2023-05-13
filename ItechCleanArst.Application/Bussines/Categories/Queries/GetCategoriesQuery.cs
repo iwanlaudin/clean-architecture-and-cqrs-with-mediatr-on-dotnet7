@@ -28,8 +28,8 @@ namespace ItechCleanArst.Application.Bussines.Categories.Queries
                                   {
                                       Id = c.Id,
                                       Name = c.Name,
-                                      CreatedDt = c.CreatedDt,
-                                      UpdatedDt = c.UpdatedDt
+                                      CreatedDt = c.CreatedAt,
+                                      UpdatedDt = c.UpdatedAt
                                   }).ToListAsync(cancellationToken);
             
             return category;

@@ -20,8 +20,8 @@ namespace ItechCleanArst.Persistence.Migrations
                     LastName = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
                     Address = table.Column<string>(type: "text", nullable: true),
-                    CreatedDt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedDt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -37,9 +37,9 @@ namespace ItechCleanArst.Persistence.Migrations
                     Title = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
                     Publisher = table.Column<string>(type: "text", nullable: true),
-                    PublisherDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatedDt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedDt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    PublishedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -53,8 +53,8 @@ namespace ItechCleanArst.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
-                    CreatedDt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedDt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -63,24 +63,25 @@ namespace ItechCleanArst.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AuthorBook",
+                name: "BookAuthors",
                 columns: table => new
                 {
-                    AuthorsId = table.Column<Guid>(type: "uuid", nullable: false),
-                    BooksId = table.Column<Guid>(type: "uuid", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    BookId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AuthorId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AuthorBook", x => new { x.AuthorsId, x.BooksId });
+                    table.PrimaryKey("PK_BookAuthors", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AuthorBook_Authors_AuthorsId",
-                        column: x => x.AuthorsId,
+                        name: "FK_BookAuthors_Authors_AuthorId",
+                        column: x => x.AuthorId,
                         principalTable: "Authors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AuthorBook_Books_BooksId",
-                        column: x => x.BooksId,
+                        name: "FK_BookAuthors_Books_BookId",
+                        column: x => x.BookId,
                         principalTable: "Books",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -94,9 +95,10 @@ namespace ItechCleanArst.Persistence.Migrations
                     Title = table.Column<string>(type: "text", nullable: true),
                     Content = table.Column<string>(type: "text", nullable: true),
                     TotalUserRate = table.Column<int>(type: "integer", nullable: false),
+                    PublishedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedDt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedDt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -116,9 +118,14 @@ namespace ItechCleanArst.Persistence.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AuthorBook_BooksId",
-                table: "AuthorBook",
-                column: "BooksId");
+                name: "IX_BookAuthors_AuthorId",
+                table: "BookAuthors",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookAuthors_BookId",
+                table: "BookAuthors",
+                column: "BookId");
         }
 
         /// <inheritdoc />
@@ -128,7 +135,7 @@ namespace ItechCleanArst.Persistence.Migrations
                 name: "Articles");
 
             migrationBuilder.DropTable(
-                name: "AuthorBook");
+                name: "BookAuthors");
 
             migrationBuilder.DropTable(
                 name: "Categories");

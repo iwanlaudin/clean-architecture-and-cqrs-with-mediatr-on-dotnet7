@@ -13,6 +13,7 @@ namespace ItechCleanArst.Domain.Entities
         public string Title { get; set; }
         public string Content { get; set; }
         public int TotalUserRate { get; set; }
+        public DateTime PublishedDate { get; set; }
         [ForeignKey(nameof(Category))]
         public Guid CategoryId { get; set; }
         public Category Category { get; set; }

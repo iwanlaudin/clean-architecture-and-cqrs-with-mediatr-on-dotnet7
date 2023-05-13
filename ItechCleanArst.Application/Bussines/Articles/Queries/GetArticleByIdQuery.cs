@@ -26,14 +26,16 @@ namespace ItechCleanArst.Application.Bussines.Articles.Queries
                                     Id = a.Id,
                                     Title = a.Title,
                                     Content = a.Content,
-                                    CreatedDt = a.CreatedDt,
-                                    UpdatedDt = a.UpdatedDt,
+                                    PublishedDate = a.PublishedDate,
+                                    TotalUserRate = a.TotalUserRate,
+                                    CreatedDt = a.CreatedAt,
+                                    UpdatedDt = a.UpdatedAt,
                                     Category = new Categories.DTOs.CategoryDto
                                     {
                                         Id = c.Id,
                                         Name = c.Name,
-                                        CreatedDt = c.CreatedDt,
-                                        UpdatedDt = c.UpdatedDt
+                                        CreatedDt = c.CreatedAt,
+                                        UpdatedDt = c.UpdatedAt
                                     }
                                 }).FirstOrDefaultAsync(cancellationToken);
 

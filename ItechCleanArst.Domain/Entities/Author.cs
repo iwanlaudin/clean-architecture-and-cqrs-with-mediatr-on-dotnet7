@@ -11,6 +11,5 @@ namespace ItechCleanArst.Domain.Entities
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }
-        public virtual ICollection<Book> Books { get; set; }
     }
 }

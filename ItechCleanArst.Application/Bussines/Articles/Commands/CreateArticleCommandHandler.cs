@@ -17,7 +17,7 @@ namespace ItechCleanArst.Application.Bussines.Articles.Commands
         {
             var article = await _dbcontext.Articles
                 .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == request.Id && x.IsDeleted == false);
+                .FirstOrDefaultAsync(x => x.Id == request.Id && x.IsDeleted != true);
 
             if (article != null)
             {
@@ -29,9 +29,10 @@ namespace ItechCleanArst.Application.Bussines.Articles.Commands
                 Id = Guid.NewGuid(),
                 Title = request.Title,
                 Content = request.Content,
+                PublishedDate = request.PublishedDate,
                 CategoryId = request.CategoryId,
-                CreatedDt = DateTime.UtcNow,
-                UpdatedDt = DateTime.UtcNow,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
                 IsDeleted = false
             };
 
@@ -45,7 +46,7 @@ namespace ItechCleanArst.Application.Bussines.Articles.Commands
         {
             article.Title = request.Title;
             article.Content = request.Content;
-            article.UpdatedDt = DateTime.UtcNow;
+            article.UpdatedAt = DateTime.UtcNow;
             article.CategoryId = request.CategoryId;
 
             _dbcontext.Articles.Update(article);
