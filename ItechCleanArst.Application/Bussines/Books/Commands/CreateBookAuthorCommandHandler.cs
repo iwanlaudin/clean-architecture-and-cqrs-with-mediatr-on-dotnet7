@@ -25,14 +25,17 @@ namespace ItechCleanArst.Application.Bussines.Books.Commands
                 return await Update(bookAuthor, request, cancellationToken);
             }
 
-            foreach (var item in request.AuthorId)
+            if (request.AuthorId != null)
             {
-                _dbcontext.BookAuthors.Add(new BookAuthor
+                foreach (var item in request.AuthorId)
                 {
-                    Id = Guid.NewGuid(),
-                    BookId = request.BookId,
-                    AuthorId = item
-                });
+                    _dbcontext.BookAuthors.Add(new BookAuthor
+                    {
+                        Id = Guid.NewGuid(),
+                        BookId = request.BookId,
+                        AuthorId = item
+                    });
+                }
             }
 
             await _dbcontext.SaveChangesAsync(cancellationToken);
@@ -41,10 +44,18 @@ namespace ItechCleanArst.Application.Bussines.Books.Commands
 
         public async Task<Guid> Update(BookAuthor bookAuthor, CreateBookAuthorCommand request, CancellationToken cancellationToken)
         {
-
-            foreach (var item in request.AuthorId)
+            var bookAuthors = new BookAuthor();
+            if (request.AuthorId != null)
             {
-                bookAuthor.AuthorId = item;
+                for (int i = 0; i < request.AuthorId.Count(); i++)
+                {
+                    bookAuthors.AuthorId = request.AuthorId[i];
+                }
+
+                // foreach (var item in request.AuthorId.Count())
+                // {
+                //     bookAuthor.AuthorId = item;
+                // }
             }
 
             _dbcontext.BookAuthors.UpdateRange(bookAuthor);

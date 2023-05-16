@@ -13,6 +13,6 @@ namespace ItechCleanArst.Application.Bussines.Books.Commands
         public string? Description { get; init; }
         public string? Publisher { get; init; }
         public DateTime PublishedDate { get; init; }
-        public Guid[]? AuthorId { get; init; }
+        public Guid[] AuthorId { get; init; }
     }
 }

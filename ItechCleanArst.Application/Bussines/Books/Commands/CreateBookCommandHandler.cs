@@ -18,42 +18,38 @@ namespace ItechCleanArst.Application.Bussines.Books.Commands
         public async Task<string> Handle(CreateBookCommand request, CancellationToken cancellationToken)
         {
             var book = await _dbcontext.Books
-                .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == request.Id && x.IsDeleted == false, cancellationToken);
+                .Include(x => x.BookAuthors)
+                .Where(x => x.Id == request.Id && x.IsDeleted == false)
+                .FirstOrDefaultAsync(cancellationToken);
 
             if (book != null)
             {
                 return await Update(book, request, cancellationToken);
             }
 
-            await using var transaction = _dbcontext.Database.BeginTransaction();
-            try
+            book = new Book
             {
-                book = new Book
-                {
-                    Id = Guid.NewGuid(),
-                    Title = request.Title,
-                    Description = request.Description,
-                    Publisher = request.Publisher,
-                    PublishedDate = request.PublishedDate,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow,
-                    IsDeleted = false
-                };
+                Id = Guid.NewGuid(),
+                Title = request.Title,
+                Description = request.Description,
+                Publisher = request.Publisher,
+                PublishedDate = request.PublishedDate,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                IsDeleted = false
+            };
 
-                await _dbcontext.Books.AddAsync(book, cancellationToken);
-                await _dbcontext.SaveChangesAsync(cancellationToken);
+            book.BookAuthors = request.AuthorId != null
+                              ? request.AuthorId.Select(authorId => new BookAuthor
+                              {
+                                  Id = Guid.NewGuid(),
+                                  BookId = book.Id,
+                                  AuthorId = authorId,
+                              }).ToList()
+                              : new List<BookAuthor>();
 
-                await _mediator.Send(new CreateBookAuthorCommand(book.Id, request.AuthorId));
-
-                await _dbcontext.SaveChangesAsync(cancellationToken);
-                await transaction.CommitAsync();
-            }
-            catch (DbUpdateException ex)
-            {
-                _dbcontext.Database.RollbackTransaction();
-                throw ex;
-            }
+            await _dbcontext.Books.AddAsync(book, cancellationToken);
+            await _dbcontext.SaveChangesAsync(cancellationToken);
 
             return $"{book.Title} has been saved!";
         }
@@ -69,9 +65,12 @@ namespace ItechCleanArst.Application.Bussines.Books.Commands
                 book.PublishedDate = request.PublishedDate;
             }
 
-            if (request.AuthorId != null && request.AuthorId?.Length > 0)
+            if (request.AuthorId != null && request.AuthorId.Any())
             {
-                await _mediator.Send(new CreateBookAuthorCommand(book.Id, request.AuthorId));
+                book.BookAuthors = request.AuthorId.Select(authorId => new BookAuthor
+                {
+                    AuthorId = authorId
+                }).ToList();
             }
 
             _dbcontext.Books.Update(book);
