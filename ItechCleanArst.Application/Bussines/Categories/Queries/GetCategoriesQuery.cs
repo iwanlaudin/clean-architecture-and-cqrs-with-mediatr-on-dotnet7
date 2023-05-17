@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ItechCleanArst.Application.Bussines.Categories.DTOs;
 using ItechCleanArst.Application.Interfaces;
 using MediatR;
@@ -23,7 +19,7 @@ namespace ItechCleanArst.Application.Bussines.Categories.Queries
         public async Task<IEnumerable<CategoryDto>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
         {
             var category = await (from c in _dbcontext.Categories
-                                  where c.IsDeleted != true
+                                  where !c.IsDeleted
                                   select new CategoryDto
                                   {
                                       Id = c.Id,

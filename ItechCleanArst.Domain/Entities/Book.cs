@@ -11,7 +11,7 @@ namespace ItechCleanArst.Domain.Entities
         public string Title { get; set; }
         public string Description { get; set; }
         public string Publisher { get; set; }
-        public DateTime PublishedDate { get; set; }
+        public DateTime? PublishedDate { get; set; }
         public virtual ICollection<BookAuthor> BookAuthors { get; set; }
     }
 }

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ItechCleanArst.Application.Bussines.Categories.DTOs;
 using ItechCleanArst.Application.Interfaces;
 using MediatR;
@@ -23,7 +19,7 @@ namespace ItechCleanArst.Application.Bussines.Categories.Queries
         public async Task<CategoryDto> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
         {
             var category = await (from c in _dbcontext.Categories
-                                  where c.Id == request.Id && c.IsDeleted != true
+                                  where c.Id == request.Id && !c.IsDeleted
                                   select new CategoryDto
                                   {
                                       Id = c.Id,
@@ -33,7 +29,7 @@ namespace ItechCleanArst.Application.Bussines.Categories.Queries
                                   }
             ).FirstOrDefaultAsync(cancellationToken);
 
-            return category;
+            return category ?? throw new KeyNotFoundException("Category not found");
         }
     }
 }

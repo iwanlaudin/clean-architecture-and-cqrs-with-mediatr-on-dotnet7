@@ -8,9 +8,11 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2"/>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5"/>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../ItechCleanArst.Application/ItechCleanArst.Application.csproj"/>
     <ProjectReference Include="../ItechCleanArst.Persistence/ItechCleanArst.Persistence.csproj"/>
+    <ProjectReference Include="../ItechCleanArst.Infrastructure/ItechCleanArst.Infrastructure.csproj"/>
   </ItemGroup>
 </Project>

@@ -33,7 +33,7 @@ namespace ItechCleanArst.Application.Bussines.Books.Commands
                 Title = request.Title,
                 Description = request.Description,
                 Publisher = request.Publisher,
-                PublishedDate = request.PublishedDate,
+                PublishedDate = request.IsPublished ? DateTime.UtcNow : null,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow,
                 IsDeleted = false
@@ -60,9 +60,9 @@ namespace ItechCleanArst.Application.Bussines.Books.Commands
             book.Description = request.Description;
             book.Publisher = request.Publisher;
 
-            if (request.PublishedDate != null)
+            if (request.IsPublished)
             {
-                book.PublishedDate = request.PublishedDate;
+                book.PublishedDate = DateTime.UtcNow;
             }
 
             if (request.AuthorId != null && request.AuthorId.Any())

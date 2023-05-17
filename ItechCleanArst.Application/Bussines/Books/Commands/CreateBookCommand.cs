@@ -12,7 +12,7 @@ namespace ItechCleanArst.Application.Bussines.Books.Commands
         public string? Title { get; init; }
         public string? Description { get; init; }
         public string? Publisher { get; init; }
-        public DateTime PublishedDate { get; init; }
+        public bool IsPublished { get; set; }
         public Guid[] AuthorId { get; init; }
     }
 }

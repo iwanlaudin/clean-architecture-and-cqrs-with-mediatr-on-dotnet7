@@ -1,9 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5"/>
+  </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../ItechCleanArst.Domain/ItechCleanArst.Domain.csproj"/>
+    <ProjectReference Include="../ItechCleanArst.Application/ItechCleanArst.Application.csproj"/>
+  </ItemGroup>
 </Project>

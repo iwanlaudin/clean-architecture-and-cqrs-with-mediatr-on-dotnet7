@@ -29,7 +29,7 @@ namespace ItechCleanArst.Application.Bussines.Books.Queries
                                   Description = b.Description,
                                   Publisher = b.Publisher,
                                   PublishedDate = b.PublishedDate,
-                                  Author = authors.Select(a => new AuthorDto
+                                  Author = authors.Where(a => !a.Author.IsDeleted).Select(a => new AuthorDto
                                   {
                                       Id = a.Id,
                                       FirstName = a.Author.FirstName,

@@ -1,5 +1,4 @@
 using ItechCleanArst.Application.Bussines.Authors.DTOs;
-using ItechCleanArst.Domain.Entities;
 
 namespace ItechCleanArst.Application.Bussines.Books.DTOs
 {
@@ -9,7 +8,7 @@ namespace ItechCleanArst.Application.Bussines.Books.DTOs
         public string? Title { get; init; }
         public string? Description { get; init; }
         public string? Publisher { get; init; }
-        public DateTime PublishedDate { get; init; }
+        public DateTime? PublishedDate { get; init; }
         public ICollection<AuthorDto> Author { get; init; }
-    }
+    }  
 }
