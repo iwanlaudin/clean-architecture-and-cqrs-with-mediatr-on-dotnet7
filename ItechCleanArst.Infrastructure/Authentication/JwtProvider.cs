@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using ItechCleanArst.Application.Interfaces;
 using ItechCleanArst.Domain.Entities;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ItechCleanArst.Infrastructure.Authentication
@@ -11,16 +12,21 @@ namespace ItechCleanArst.Infrastructure.Authentication
     {
         private readonly JwtOptions _jwtOptions;
 
-        public JwtProvider(JwtOptions jwtOptions)
+        public JwtProvider(IOptions<JwtOptions> jwtOptions)
         {
-            _jwtOptions = jwtOptions;
+            _jwtOptions = jwtOptions.Value;
         }
 
         public string GenerateToken(User user)
         {
+            if (user is null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
             var claims = new Claim[] {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email)
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
             };
 
             var signingCredentials = new SigningCredentials(
@@ -28,18 +34,17 @@ namespace ItechCleanArst.Infrastructure.Authentication
                 SecurityAlgorithms.HmacSha256
             );
 
-            var token = new JwtSecurityToken(
-                _jwtOptions.Issuer,
-                _jwtOptions.Audience,
-                claims,
-                null,
-                DateTime.UtcNow.AddHours(1),
-                signingCredentials
+            var token = new JwtSecurityToken
+            (
+                issuer: _jwtOptions.Issuer,
+                audience: _jwtOptions.Audience,
+                claims: claims,
+                notBefore: DateTime.UtcNow,
+                expires: DateTime.UtcNow.AddHours(1),
+                signingCredentials: signingCredentials
             );
 
-            string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
-
-            return tokenValue;
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

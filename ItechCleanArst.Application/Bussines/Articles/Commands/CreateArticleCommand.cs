@@ -8,10 +8,10 @@ namespace ItechCleanArst.Application.Bussines.Articles.Commands
 {
     public record CreateArticleCommand : IRequest<string>
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; init; }
         public string? Title { get; init; }
         public string? Content { get; init; }
         public DateTime PublishedDate { get; init; }
-        public Guid CategoryId  { get; init; }
+        public Guid CategoryId { get; init; }
     }
 }

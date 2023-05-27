@@ -11,8 +11,8 @@ namespace ItechCleanArst.Persistence
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString(connectionName)));
-            
-            services.AddScoped<IApplicationDbContext>(provider => 
+
+            services.AddScoped<IApplicationDbContext>(provider =>
                 provider.GetRequiredService<ApplicationDbContext>());
 
             return services;

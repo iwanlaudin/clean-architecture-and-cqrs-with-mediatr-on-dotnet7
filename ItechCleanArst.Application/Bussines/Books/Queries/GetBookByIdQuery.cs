@@ -31,7 +31,7 @@ namespace ItechCleanArst.Application.Bussines.Books.Queries
                                   PublishedDate = b.PublishedDate,
                                   Author = authors.Where(a => !a.Author.IsDeleted).Select(a => new AuthorDto
                                   {
-                                      Id = a.Id,
+                                      Id = a.Author.Id,
                                       FirstName = a.Author.FirstName,
                                       LastName = a.Author.LastName,
                                       Email = a.Author.Email,
